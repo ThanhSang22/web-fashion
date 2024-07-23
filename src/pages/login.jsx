@@ -12,13 +12,21 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { FaFacebookF, FaGooglePlusG } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [input, setInput] = useState("");
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+  const navigate = useNavigate();
 
-  const handleInputChange = (e) => setInput(e.target.value);
-
-  const isError = input === "";
+  const onSubmit = (data) => {
+    console.log(data);
+    navigate("/");
+  };
 
   return (
     <div>
@@ -43,24 +51,36 @@ const Login = () => {
               </a>
             </p>
           </div>
-          <form action="submit" className="space-y-4 mt-6">
-            <FormControl isInvalid={isError}>
-              <FormLabel>Email</FormLabel>
-              <Input type="email" value={input} onChange={handleInputChange} />
-              {isError && (
-                <FormErrorMessage>Email is required.</FormErrorMessage>
-              )}
-            </FormControl>
-            <FormControl isInvalid={isError}>
-              <FormLabel>Mật khẩu</FormLabel>
-              <Input type="email" value={input} onChange={handleInputChange} />
-              {!isError && (
-                <FormErrorMessage>Email is required.</FormErrorMessage>
-              )}
-            </FormControl>
-            <Input type="text" placeholder="Email" />
-            <Input type="text" placeholder="Mật khẩu" />
-            <Button className="w-full !text-[16px] !rounded-[12px] !font-normal !py-6 !bg-[#1c5b41] !text-white hover:!bg-[#fe9614]">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 mt-6">
+            <Input
+              {...register("email", {
+                required: "Vui lòng nhập email.",
+                pattern: {
+                  value: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                  message: "Email không hợp lệ.",
+                },
+              })}
+              type="email"
+              placeholder="Email"
+            />
+            <p className="text-start text-red-500">{errors.email?.message}</p>
+            <Input
+              {...register("password", {
+                required: "Vui lòng nhập password.",
+                pattern: {
+                  message: "Mật khẩu không hợp lệ, nhập lại đi shop ơi",
+                },
+              })}
+              type="password"
+              placeholder="Mật khẩu"
+            />
+            <p className="text-start text-red-500">
+              {errors.password?.message}
+            </p>
+            <Button
+              type="submit"
+              className="w-full !mt-7 !text-[16px] !rounded-[12px] !font-normal !py-6 !bg-[#1c5b41] !text-white hover:!bg-[#fe9614]"
+            >
               Đăng nhập
             </Button>
           </form>

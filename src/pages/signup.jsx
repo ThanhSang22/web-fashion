@@ -5,8 +5,21 @@ import Footer from "../components/footer";
 import { FcNext } from "react-icons/fc";
 import { Button, Input } from "@chakra-ui/react";
 import { FaFacebookF, FaGooglePlusG } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const Signup = () => {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+  const navigate = useNavigate();
+
+  const onSubmit = (data) => {
+    console.log(data);
+    navigate("/login");
+  };
   return (
     <div>
       <Header />
@@ -24,19 +37,65 @@ const Signup = () => {
             <h1 className="uppercase text-[30px] font-light">đăng nhập</h1>
             <p>
               Đã có tài khoản,{" "}
-              <a href="/signup" className="text-[#1c5b41] font-bold">
+              <a href="/login" className="text-[#1c5b41] font-bold">
                 {" "}
                 đăng nhập tại đây
               </a>
             </p>
           </div>
-          <form action="submit" className="space-y-4 mt-6">
-            <Input type="text" placeholder="Họ" />
-            <Input type="text" placeholder="Tên" />
-            <Input type="text" placeholder="Email" />
-            <Input type="text" placeholder="Số điện thoại" />
-            <Input type="text" placeholder="Mật khẩu" />
-            <Button className="w-full !text-[16px] !rounded-[12px] !font-normal !py-6 !bg-[#1c5b41] !text-white hover:!bg-[#fe9614]">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 mt-6">
+            <Input
+              {...register("name", {
+                required: "Vui lòng nhập tên.",
+                pattern: {
+                  message: "Tên không hợp lệ",
+                  maxLength: 3,
+                },
+              })}
+              type="name"
+              placeholder="Tên"
+            />
+            <p className="text-start text-red-500">{errors.name?.message}</p>
+            <Input
+              {...register("email", {
+                required: "Vui lòng nhập email.",
+                pattern: {
+                  value: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                  message: "Email không hợp lệ.",
+                },
+              })}
+              type="email"
+              placeholder="Email"
+            />
+            <p className="text-start text-red-500">{errors.email?.message}</p>
+            <Input
+              {...register("phone", {
+                required: "Vui lòng nhập số điện thoại.",
+                pattern: {
+                  message: "Số điện thoại không hợp lệ",
+                },
+              })}
+              type="phone"
+              placeholder="Số điện thoại"
+            />
+            <p className="text-start text-red-500">{errors.phone?.message}</p>
+            <Input
+              {...register("password", {
+                required: "Vui lòng nhập password.",
+                pattern: {
+                  message: "Mật khẩu không hợp lệ, nhập lại đi shop ơi",
+                },
+              })}
+              type="password"
+              placeholder="Mật khẩu"
+            />
+            <p className="text-start text-red-500">
+              {errors.password?.message}
+            </p>
+            <Button
+              type="submit"
+              className="!mt-7 w-full !text-[16px] !rounded-[12px] !font-normal !py-6 !bg-[#1c5b41] !text-white hover:!bg-[#fe9614]"
+            >
               Đăng ký
             </Button>
           </form>
