@@ -105,7 +105,7 @@ const Header = () => {
               <Link to="/" className="hover:text-orange-400">
                 Thời trang nam
               </Link>
-              <Link to="/" className="hover:text-orange-400">
+              <Link to="/product" className="hover:text-orange-400">
                 Sản phẩm
               </Link>
               <Link to="/" className="hover:text-orange-400">

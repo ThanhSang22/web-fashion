@@ -14,6 +14,7 @@ import {
 import { FaFacebookF, FaGooglePlusG } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import CustomInput from "../components/customInput";
 
 const Login = () => {
   const {
@@ -52,8 +53,8 @@ const Login = () => {
             </p>
           </div>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 mt-6">
-            <Input
-              {...register("email", {
+            <CustomInput
+              register={register("email", {
                 required: "Vui lòng nhập email.",
                 pattern: {
                   value: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
@@ -62,10 +63,12 @@ const Login = () => {
               })}
               type="email"
               placeholder="Email"
+              name="email"
+              errors={errors.email?.message}
             />
-            <p className="text-start text-red-500">{errors.email?.message}</p>
-            <Input
-              {...register("password", {
+
+            <CustomInput
+              register={register("password", {
                 required: "Vui lòng nhập password.",
                 pattern: {
                   message: "Mật khẩu không hợp lệ, nhập lại đi shop ơi",
@@ -73,10 +76,9 @@ const Login = () => {
               })}
               type="password"
               placeholder="Mật khẩu"
+              name="password"
+              errors={errors.password?.message}
             />
-            <p className="text-start text-red-500">
-              {errors.password?.message}
-            </p>
             <Button
               type="submit"
               className="w-full !mt-7 !text-[16px] !rounded-[12px] !font-normal !py-6 !bg-[#1c5b41] !text-white hover:!bg-[#fe9614]"

@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
-import classNames from "classnames";
+import { Input } from "@chakra-ui/react";
 
 const CustomInput = ({
-  id,
-  icon,
   name,
   setName,
   type,
@@ -13,8 +11,6 @@ const CustomInput = ({
   showPassWord,
   register,
   errors,
-  className,
-  classNameIcon,
   onChange,
 }) => {
   const [showPass, setShowPass] = useState(false);
@@ -22,22 +18,24 @@ const CustomInput = ({
   return (
     <div>
       <div className="mt-2 relative">
-        <input
-          onChange={onChange || ((e) => setName(e.target.value))}
-          id={id}
-          name={name}
+        <Input
           type={type || (!showPass ? "password" : "text")}
-          autoComplete="current-password"
-          placeholder={placeholder}
+          onChange={onChange || ((e) => setName(e.target.value))}
           value={value}
+          {...register}
+          placeholder={placeholder}
+          name={name}
+        />
+        {/* <input
+          id={id}
+          autoComplete="current-password"
           className={classNames(
             `block w-full h-[60px] rounded-[10px] border-0 py-1.5 px-14 text-gray-900 shadow-sm 
           ring-1 ring-inset ring-gray-300 placeholder:text-[#8E8E8E] focus:ring-2 focus:ring-inset 
           focus:ring-indigo-600 sm:text-xl sm:leading-6 focus:outline-none ${className}`,
             { "focus:right-1 focus:ring-inset focus:ring-red-400": errors }
           )}
-          {...register}
-        />
+        /> */}
         {showPassWord &&
           (showPass ? (
             <span
@@ -55,11 +53,9 @@ const CustomInput = ({
             </span>
           ))}
 
-        {errors && (
-          <p className="text-[#E41212] text-sm font-medium ml-7 mt-1">
-            {errors}
-          </p>
-        )}
+        <p className="text-[#E41212] text-sm font-medium mt-1 ml-2 text-start">
+          {errors}
+        </p>
       </div>
     </div>
   );

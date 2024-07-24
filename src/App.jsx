@@ -1,12 +1,12 @@
-// src/App.js
 import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Homepage from "./pages/homepage";
-import ProductPage from "./pages/productPage";
+import DetailPage from "./pages/detailPage";
 import CartPage from "./pages/cartPage";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
 import PayPage from "./pages/payPage";
+import ProductPage from "./pages/productPage";
 
 const App = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -19,7 +19,8 @@ const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Homepage />} />
-      <Route path="/item" element={<ProductPage />} />
+      <Route path="/item" element={<DetailPage />} />
+      <Route path="/product" element={<ProductPage />} />
       <Route
         path="/cart"
         element={

@@ -7,6 +7,7 @@ import { Button, Input } from "@chakra-ui/react";
 import { FaFacebookF, FaGooglePlusG } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { toast, ToastContainer } from "react-toastify";
 
 const Signup = () => {
   const {
@@ -18,12 +19,14 @@ const Signup = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+    toast("Đăng ký thành công!");
     navigate("/login");
   };
   return (
     <div>
       <Header />
       <Navbar />
+      <ToastContainer position="top-center" autoClose={2000} />
       <div className="mx-32">
         <div className="flex items-center gap-3 my-8">
           <p className="hover:text-[#1c5b41]  hover:font-bold">Trang chủ</p>
